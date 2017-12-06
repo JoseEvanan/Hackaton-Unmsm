@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Sound Recorder & Player
+      Cuentamé sobre tu día
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -10,8 +10,8 @@
   <ion-card>
     <ion-card-content>
       <ion-card-title>
-        <button ion-button primary (click)="stopRecord()" *ngIf="recording"><ion-icon name="mic-off"></ion-icon>&nbsp;&nbsp;Stop Record</button>
-        <button ion-button primary (click)="startRecord()" *ngIf="!recording"><ion-icon name="mic"></ion-icon>&nbsp;&nbsp;Start Record</button>
+        <button ion-button primary (click)="stopRecord()" *ngIf="recording"><ion-icon name="mic-off"></ion-icon>&nbsp;&nbsp;Detener</button>
+        <button ion-button primary (click)="startRecord()" *ngIf="!recording"><ion-icon name="mic"></ion-icon>&nbsp;&nbsp;Grabar</button>
       </ion-card-title>
     </ion-card-content>
   </ion-card>
@@ -21,4 +21,22 @@
       <button ion-button clear item-end large (click)="playAudio(audio.filename, i)"><ion-icon name="play"></ion-icon></button>
     </ion-item>
   </ion-list>
+  <br>
+  <ion-list>
+    <ion-item>
+      <input type="text" hidden [(ngModel)]="audioUrl" value="http://51.141.167.97:8000/media/audio.mp3" >
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Descripcion</ion-label>
+      <ion-textarea  id="myInput" rows="5" maxLength="120" [(ngModel)]="descripcion"></ion-textarea>
+    </ion-item>
+    <ion-item>
+      <button ion-button full (click)="sendData()" >
+        <ion-icon name="send"></ion-icon>&nbsp;&nbsp;Enviar</button>
+    </ion-item>
+  </ion-list>
 </ion-content>
+
+
+
+
