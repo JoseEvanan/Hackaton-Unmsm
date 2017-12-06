@@ -5,7 +5,7 @@ import { File } from '@ionic-native/file';
 import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 import { HttpClient } from '@angular/common/http';
 import { AlertController } from 'ionic-angular';
-
+import { Http, URLSearchParams, RequestOptions, Headers } from '@angular/http';
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -17,7 +17,7 @@ export class HomePage {
   fileName: string;
   audio: MediaObject;
   audioList: any[] = [];
-  audioUrl: string = '';
+  audioUrl: string = 'http://51.141.167.97:8000/media/audio.mp3';
   descripcion: string = '';
 
   constructor(public navCtrl: NavController,
@@ -25,7 +25,7 @@ export class HomePage {
     private media: Media,
     private transfer: FileTransfer,
     private file: File,
-    public http: HttpClient,
+    public http: Http,
     public platform: Platform) {}
 
   ionViewWillEnter() {
@@ -52,15 +52,18 @@ export class HomePage {
     console.log(this.audioUrl);
     this.audioUrl = "http://starter.pe/voz.mp3";
     console.log(this.descripcion);
-    var data = { audio: this.audioUrl, text: this.descripcion };
-
+    this.descripcion = 'Mi nombre es Jorge. Soy un comunicador social de la Universidad Nacional Mayor de San Marcos. Me encanta temas relacionados a la tecnología. En un futuro pienso emprender un negocio con personas que tengan la misma visión que yo. Por el momento, estoy buscando especializarme en administración de empresas o neurociencias. Mis pasatiempos favoritos son leer, escuchar música y jugar con mi hermanito de 1 año y dos meses. El deporte que más practico es el karate. Mi entrenamiento son todos los sábados. La persona a quién admiro es Ellon Musk. Es una persona visionaria, talentosa y, sobre todo, líder.'
+    var data = { 'audio': this.audioUrl, 'text': this.descripcion };
+    let headers = new Headers();
     return new Promise((resolve, reject) => {
-      this.http.post('https://feelapp-api.herokuapp.com/analizar', JSON.stringify(data))
+      this.http.post('http:/localhost:3000/analiza', data, {headers: headers})
         .subscribe(res => {
           this.alertResult("OK");
+          console.log(res)
+          //setTimeout(resolve(res), 5000);
           resolve(res);
         }, (err) => {
-          this.alertResult("OK");
+          this.alertResult("ERROR");
           reject(err);
         });
     });
